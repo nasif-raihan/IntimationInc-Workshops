@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "blog-crud"
+version = "0.1.0"
+description = ""
+authors = ["Nasif Raihan <nasif.raihan78@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.0.6"
+ruff = "^0.4.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
