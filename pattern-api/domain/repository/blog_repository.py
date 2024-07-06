@@ -5,11 +5,11 @@ from domain.model.blog import Blog
 
 class BlogRepository(ABC):
     @abstractmethod
-    def get_blog_by_id(self, blog_id: int) -> Blog | None:
-        raise NotImplementedError("Implement get_blog_by_id method")
+    def get_blog(self, title: str, author_username: str) -> Blog | None:
+        raise NotImplementedError("Implement get_blog method")
 
     @abstractmethod
-    def get_all_blogs(self) -> list:
+    def get_all_blogs(self) -> list[Blog]:
         raise NotImplementedError("Implement get_blog_by_id method")
 
     @abstractmethod
@@ -21,5 +21,5 @@ class BlogRepository(ABC):
         raise NotImplementedError("Implement update_blog method")
 
     @abstractmethod
-    def delete_blog(self, blog_id: int) -> bool:
+    def delete_blog(self, title: str, author_username: str) -> bool:
         raise NotImplementedError("Implement delete_blog method")

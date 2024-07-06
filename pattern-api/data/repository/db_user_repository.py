@@ -27,8 +27,6 @@ class DBUserRepository(UserRepository):
                 is_active=user.is_active,
                 is_staff=user.is_staff,
                 is_admin=user.is_admin,
-                created_at=user.created_at,
-                updated_at=user.updated_at,
             )
             db_user.save()
             return self.to_user(db_user)
@@ -45,8 +43,6 @@ class DBUserRepository(UserRepository):
         db_user.is_active = user.is_active
         db_user.is_staff = user.is_staff
         db_user.is_admin = user.is_admin
-        db_user.created_at = user.created_at
-        db_user.updated_at = user.updated_at
         db_user.save()
 
         return self.to_user(db_user)
