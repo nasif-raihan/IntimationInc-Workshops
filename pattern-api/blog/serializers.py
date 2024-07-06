@@ -71,12 +71,12 @@ class BlogSerializer(serializers.ModelSerializer):
     title = serializers.CharField(required=True, max_length=200)
     content = serializers.CharField(required=True)
     created_at = serializers.DateTimeField(read_only=True)
-    last_modified = serializers.DateTimeField(read_only=True)
+    updated_at = serializers.DateTimeField(read_only=True)
     author = UserSerializer(read_only=True)
 
     class Meta:
         model = Blog
-        fields = ["id", "title", "content", "created_at", "last_modified", "author"]
+        fields = ["id", "title", "content", "created_at", "updated_at", "author"]
 
     def create(self, validated_data: dict):
         request = self.context.get("request", None)

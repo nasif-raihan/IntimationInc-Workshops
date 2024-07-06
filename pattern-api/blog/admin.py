@@ -5,7 +5,7 @@ from .models import Blog, User
 
 @admin.register(Blog)
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ("title", "content", "created_at", "last_modified", "author")
+    list_display = ("title", "content", "created_at", "updated_at", "author")
 
 
 @admin.register(User)

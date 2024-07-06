@@ -56,6 +56,6 @@ class DBBlogRepository(BlogRepository):
             title=db_blog.title,
             content=db_blog.content,
             created_at=db_blog.created_at,
-            last_modified=db_blog.last_modified,
+            updated_at=db_blog.updated_at,
             author=db_blog.author,
         )

@@ -9,5 +9,5 @@ class User:
     is_active: bool
     is_staff: bool
     is_admin: bool
-    created_at: datetime
-    updated_at: datetime
+    created_at: datetime = None
+    updated_at: datetime = datetime.now()
