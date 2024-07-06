@@ -5,11 +5,11 @@ from blog.models import User
 
 class UserRepository(ABC):
     @abstractmethod
-    def get_user_by_username(self, username: str) -> User:
+    def get_user_by_username(self, username: str) -> User | None:
         raise NotImplementedError("Implement get_user_by_username method")
 
     @abstractmethod
-    def get_all_users(self) -> list:
+    def get_all_users(self) -> list[User]:
         raise NotImplementedError("Implement get_all_users method")
 
     @abstractmethod
