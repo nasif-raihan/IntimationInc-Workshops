@@ -75,11 +75,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
     author = UserSerializer(read_only=True)
 
     class Meta:
-<<<<<<< HEAD
         model = BlogPost
-=======
-        model = Blog
->>>>>>> origin/main
         fields = ["id", "title", "content", "created_at", "updated_at", "author"]
 
     def create(self, validated_data: dict):

@@ -47,14 +47,20 @@ class User(AbstractBaseUser):
 class BlogPost(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
-<<<<<<< HEAD
-=======
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
->>>>>>> origin/main
     author = models.ForeignKey(to=User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
         return f"{self.title}"
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(to=BlogPost, on_delete=models.CASCADE)
+    author = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return f"{self.author}@{self.post}"

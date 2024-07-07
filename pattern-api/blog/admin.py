@@ -1,15 +1,10 @@
 from django.contrib import admin
 
-from .models import BlogPost, User
+from .models import Comment, BlogPost, User
 
 
-<<<<<<< HEAD
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
-=======
-@admin.register(Blog)
-class BlogAdmin(admin.ModelAdmin):
->>>>>>> origin/main
     list_display = ("title", "content", "created_at", "updated_at", "author")
 
 
@@ -24,3 +19,8 @@ class UserAdmin(admin.ModelAdmin):
         "created_at",
         "updated_at",
     )
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ("post", "author", "comment", "created_at", "updated_at")

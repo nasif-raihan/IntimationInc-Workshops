@@ -61,7 +61,6 @@ class DBBlogPostRepository(BlogPostRepository):
             return False
 
     @classmethod
-<<<<<<< HEAD
     def to_blog_post(cls, db_blog_post: DBBlogPost) -> BlogPost:
         return BlogPost(
             title=db_blog_post.title,
@@ -69,13 +68,4 @@ class DBBlogPostRepository(BlogPostRepository):
             created_at=db_blog_post.created_at,
             updated_at=db_blog_post.updated_at,
             author=db_blog_post.author,
-=======
-    def to_blog(cls, db_blog: DBBlog) -> Blog:
-        return Blog(
-            title=db_blog.title,
-            content=db_blog.content,
-            created_at=db_blog.created_at,
-            updated_at=db_blog.updated_at,
-            author=db_blog.author,
->>>>>>> origin/main
         )
