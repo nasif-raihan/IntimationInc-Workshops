@@ -1,61 +1,81 @@
-from blog.models import Blog as DBBlog
-from domain.model import Blog
-from domain.repository import BlogRepository
+from blog.models import BlogPost as DBBlogPost
+from domain.model import BlogPost
+from domain.repository import BlogPostRepository
 
 
-class DBBlogRepository(BlogRepository):
-    def get_blog(self, title: str, author_username: str) -> Blog | None:
+class DBBlogPostRepository(BlogPostRepository):
+    def get_blog_post(self, title: str, author_username: str) -> BlogPost | None:
         try:
-            db_blog = DBBlog.objects.get(title=title, author__username=author_username)
-        except DBBlog.DoesNotExist:
+            db_blog_post = DBBlogPost.objects.get(
+                title=title, author__username=author_username
+            )
+        except DBBlogPost.DoesNotExist:
             return None
-        return self.to_blog(db_blog)
+        return self.to_blog_post(db_blog_post)
 
-    def get_all_blogs(self) -> list[Blog]:
-        db_blogs = DBBlog.objects.all()
-        if len(db_blogs):
-            return [self.to_blog(db_blog) for db_blog in db_blogs]
+    def get_all_blog_posts(self) -> list[BlogPost]:
+        db_blog_posts = DBBlogPost.objects.all()
+        if len(db_blog_posts):
+            return [self.to_blog_post(db_blog_post) for db_blog_post in db_blog_posts]
         return []
 
-    def add_blog(self, blog: Blog) -> Blog:
+    def add_blog_post(self, blog_post: BlogPost) -> BlogPost:
         try:
-            DBBlog.objects.get(title=blog.title, author__username=blog.author.username)
-        except DBBlog.DoesNotExist:
-            db_blog = DBBlog(title=blog.title, content=blog.content, author=blog.author)
-            db_blog.save()
-            return self.to_blog(db_blog)
-        return self.update_blog(blog)
-
-    def update_blog(self, blog: Blog) -> Blog:
-        try:
-            db_blog = DBBlog.objects.get(
-                title=blog.title, author__username=blog.author.username
+            DBBlogPost.objects.get(
+                title=blog_post.title, author__username=blog_post.author.username
             )
-        except DBBlog.DoesNotExist:
+        except DBBlogPost.DoesNotExist:
+            db_blog_post = DBBlogPost(
+                title=blog_post.title,
+                content=blog_post.content,
+                author=blog_post.author,
+            )
+            db_blog_post.save()
+            return self.to_blog_post(db_blog_post)
+        return self.update_blog_post(blog_post)
+
+    def update_blog_post(self, blog_post: BlogPost) -> BlogPost:
+        try:
+            db_blog_post = DBBlogPost.objects.get(
+                title=blog_post.title, author__username=blog_post.author.username
+            )
+        except DBBlogPost.DoesNotExist:
             raise RuntimeError(
-                f"The blog titled {blog.title} authored by {blog.author} is not found"
+                f"The post titled {blog_post.title} authored by {blog_post.author} is not found"
             )
 
-        db_blog.title = blog.title
-        db_blog.content = blog.content
-        db_blog.save()
+        db_blog_post.title = blog_post.title
+        db_blog_post.content = blog_post.content
+        db_blog_post.save()
 
-        return self.to_blog(db_blog)
+        return self.to_blog_post(db_blog_post)
 
-    def delete_blog(self, title: str, author_username: str) -> bool:
+    def delete_blog_post(self, title: str, author_username: str) -> bool:
         try:
-            db_blog = DBBlog.objects.get(title=title, author__username=author_username)
-            db_blog.delete()
+            db_blog_post = DBBlogPost.objects.get(
+                title=title, author__username=author_username
+            )
+            db_blog_post.delete()
             return True
-        except DBBlog.DoesNotExist:
+        except DBBlogPost.DoesNotExist:
             return False
 
     @classmethod
+<<<<<<< HEAD
+    def to_blog_post(cls, db_blog_post: DBBlogPost) -> BlogPost:
+        return BlogPost(
+            title=db_blog_post.title,
+            content=db_blog_post.content,
+            created_at=db_blog_post.created_at,
+            updated_at=db_blog_post.updated_at,
+            author=db_blog_post.author,
+=======
     def to_blog(cls, db_blog: DBBlog) -> Blog:
         return Blog(
             title=db_blog.title,
             content=db_blog.content,
             created_at=db_blog.created_at,
-            last_modified=db_blog.last_modified,
+            updated_at=db_blog.updated_at,
             author=db_blog.author,
+>>>>>>> origin/main
         )

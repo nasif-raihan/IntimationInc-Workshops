@@ -5,9 +5,9 @@ from .user import User
 
 
 @dataclass
-class Blog:
+class BlogPost:
     title: str
     content: str
-    created_at: datetime
-    last_modified: datetime
     author: User
+    created_at: datetime = None
+    updated_at: datetime = datetime.now()

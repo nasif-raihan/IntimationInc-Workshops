@@ -2,7 +2,7 @@ from typing import Self
 
 from rest_framework import serializers
 
-from .models import User, Blog
+from .models import User, BlogPost
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -67,16 +67,20 @@ class UserSerializer(serializers.ModelSerializer):
         return instance
 
 
-class BlogSerializer(serializers.ModelSerializer):
+class BlogPostSerializer(serializers.ModelSerializer):
     title = serializers.CharField(required=True, max_length=200)
     content = serializers.CharField(required=True)
     created_at = serializers.DateTimeField(read_only=True)
-    last_modified = serializers.DateTimeField(read_only=True)
+    updated_at = serializers.DateTimeField(read_only=True)
     author = UserSerializer(read_only=True)
 
     class Meta:
+<<<<<<< HEAD
+        model = BlogPost
+=======
         model = Blog
-        fields = ["id", "title", "content", "created_at", "last_modified", "author"]
+>>>>>>> origin/main
+        fields = ["id", "title", "content", "created_at", "updated_at", "author"]
 
     def create(self, validated_data: dict):
         request = self.context.get("request", None)

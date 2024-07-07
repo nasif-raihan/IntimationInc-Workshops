@@ -1,8 +1,8 @@
-from domain.use_case.blog import (
-    AddBlogUseCase,
-    DeleteBlogUseCase,
-    GetBlogUseCase,
-    UpdateBlogUseCase,
+from domain.use_case.blog_post import (
+    AddBlogPostUseCase,
+    DeleteBlogPostUseCase,
+    GetBlogPostUseCase,
+    UpdateBlogPostUseCase,
 )
 from domain.use_case.user import (
     AddUserUseCase,
@@ -18,20 +18,28 @@ class UseCase:
         self._repository = Repository.get_instance()
 
     @property
-    def add_blog(self) -> AddBlogUseCase:
-        return AddBlogUseCase(blog_repository=self._repository.blog_repository)
+    def add_blog_post(self) -> AddBlogPostUseCase:
+        return AddBlogPostUseCase(
+            blog_post_repository=self._repository.blog_post_repository
+        )
 
     @property
-    def get_blog(self) -> GetBlogUseCase:
-        return GetBlogUseCase(blog_repository=self._repository.blog_repository)
+    def get_blog_post(self) -> GetBlogPostUseCase:
+        return GetBlogPostUseCase(
+            blog_post_repository=self._repository.blog_post_repository
+        )
 
     @property
-    def update_blog(self) -> UpdateBlogUseCase:
-        return UpdateBlogUseCase(blog_repository=self._repository.blog_repository)
+    def update_blog_post(self) -> UpdateBlogPostUseCase:
+        return UpdateBlogPostUseCase(
+            blog_post_repository=self._repository.blog_post_repository
+        )
 
     @property
-    def delete_blog(self) -> DeleteBlogUseCase:
-        return DeleteBlogUseCase(blog_repository=self._repository.blog_repository)
+    def delete_blog_post(self) -> DeleteBlogPostUseCase:
+        return DeleteBlogPostUseCase(
+            blog_post_repository=self._repository.blog_post_repository
+        )
 
     @property
     def add_user(self) -> AddUserUseCase:

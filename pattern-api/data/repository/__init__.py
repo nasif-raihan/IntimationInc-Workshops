@@ -1,2 +1,2 @@
-from .db_blog_repository import DBBlogRepository
+from .db_blog_repository import DBBlogPostRepository
 from .db_user_repository import DBUserRepository
