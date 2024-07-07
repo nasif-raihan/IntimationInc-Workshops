@@ -1,4 +1,4 @@
-from blog.models import BlogPost as DBBlogPost
+from blog.models import BlogPost as DBBlogPost, User as DBUser
 from domain.model import BlogPost
 from domain.repository import BlogPostRepository
 
@@ -21,14 +21,19 @@ class DBBlogPostRepository(BlogPostRepository):
 
     def add_blog_post(self, blog_post: BlogPost) -> BlogPost:
         try:
+            print(f"{blog_post=}")
             DBBlogPost.objects.get(
                 title=blog_post.title, author__username=blog_post.author.username
             )
         except DBBlogPost.DoesNotExist:
+            db_user = DBUser.objects.get(username=blog_post.author.username)
+            if not db_user:
+                raise RuntimeError("User not found")
+
             db_blog_post = DBBlogPost(
                 title=blog_post.title,
                 content=blog_post.content,
-                author=blog_post.author,
+                author=db_user,
             )
             db_blog_post.save()
             return self.to_blog_post(db_blog_post)

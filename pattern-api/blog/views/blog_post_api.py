@@ -1,5 +1,4 @@
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -9,37 +8,31 @@ from domain.model import BlogPost
 
 
 class BlogPostAPI(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._use_cases = UseCase()
 
     def get(self, request) -> Response:
-        response = request.data
-        title = response.get("title")
-        author_username = response.get("author_username")
-
-        if not all((title, author_username)):
-            return Response(
-                data={"message": "Invalid request payload"},
-                status=status.HTTP_400_BAD_REQUEST,
+        blog_posts = self._use_cases.get_blog_post.all()
+        formatted_blog_post = []
+        for blog_post in blog_posts:
+            user = self._use_cases.get_user.invoke(blog_post.author.username)
+            formatted_blog_post.append(
+                {
+                    "title": blog_post.title,
+                    "content": blog_post.content,
+                    "createdAt": blog_post.created_at,
+                    "updatedAt": blog_post.updated_at,
+                    "author": {
+                        "email": user.email,
+                        "username": user.username,
+                    },
+                }
             )
-
-        blog_post = self._use_cases.get_blog_post.invoke(title, author_username)
-        user = self._use_cases.get_user.invoke(author_username)
-
         return Response(
-            data={
-                "title": blog_post.title,
-                "content": blog_post.content,
-                "createdAt": blog_post.created_at,
-                "updatedAt": blog_post.updated_at,
-                "author": {
-                    "email": user.email,
-                    "username": user.username,
-                },
-            },
+            data=formatted_blog_post,
             status=status.HTTP_200_OK,
         )
 
@@ -104,6 +97,39 @@ class BlogPostAPI(APIView):
                 "title": title,
                 "author": author_username,
                 "message": "Deleted the blog_post successfully",
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
+class GetBlogPost(APIView):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self._use_cases = UseCase()
+
+    def post(self, request) -> Response:
+        title = request.data.get("title")
+        author_username = request.data.get("username")
+
+        if not all((title, author_username)):
+            return Response(
+                data={"message": "Invalid request payload"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        blog_post = self._use_cases.get_blog_post.invoke(title, author_username)
+        user = self._use_cases.get_user.invoke(author_username)
+
+        return Response(
+            data={
+                "title": blog_post.title,
+                "content": blog_post.content,
+                "createdAt": blog_post.created_at,
+                "updatedAt": blog_post.updated_at,
+                "author": {
+                    "email": user.email,
+                    "username": user.username,
+                },
             },
             status=status.HTTP_200_OK,
         )

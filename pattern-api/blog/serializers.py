@@ -70,9 +70,9 @@ class UserSerializer(serializers.ModelSerializer):
 class BlogPostSerializer(serializers.ModelSerializer):
     title = serializers.CharField(required=True, max_length=200)
     content = serializers.CharField(required=True)
+    author = UserSerializer(read_only=True)
     created_at = serializers.DateTimeField(read_only=True)
     updated_at = serializers.DateTimeField(read_only=True)
-    author = UserSerializer(read_only=True)
 
     class Meta:
         model = BlogPost
