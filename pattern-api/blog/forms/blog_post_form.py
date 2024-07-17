@@ -1,9 +1,8 @@
 from django import forms
 
-from ..models import BlogPost
 
-
-class BlogPostForm(forms.ModelForm):
-    class Meta:
-        model = BlogPost
-        fields = "__all__"
+class BlogPostForm(forms.Form):
+    title = forms.CharField(max_length=200)
+    content = forms.CharField(widget=forms.Textarea)
+    username = forms.CharField(max_length=255)
+    email = forms.EmailField()

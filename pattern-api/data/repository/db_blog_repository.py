@@ -21,7 +21,6 @@ class DBBlogPostRepository(BlogPostRepository):
 
     def add_blog_post(self, blog_post: BlogPost) -> BlogPost:
         try:
-            print(f"{blog_post=}")
             DBBlogPost.objects.get(
                 title=blog_post.title, author__username=blog_post.author.username
             )
