@@ -58,7 +58,7 @@ class BlogPost(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey(to=BlogPost, on_delete=models.CASCADE)
     author = models.ForeignKey(to=User, on_delete=models.CASCADE)
-    comment = models.TextField()
+    text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
