@@ -5,7 +5,7 @@ from domain.model import Comment
 
 class CommentRepository(ABC):
     @abstractmethod
-    def get_comment(self, comment_id: int) -> Comment | None:
+    def get_comment(self, comment_id: int, title: str, username: str) -> Comment | None:
         raise NotImplementedError("Implement get_comment method")
 
     @abstractmethod
@@ -21,5 +21,5 @@ class CommentRepository(ABC):
         raise NotImplementedError("Implement update_comment method")
 
     @abstractmethod
-    def delete_comment(self, comment_id: int) -> bool:
+    def delete_comment(self, comment_id: int, title: str, username: str) -> bool:
         raise NotImplementedError("Implement delete_comment method")

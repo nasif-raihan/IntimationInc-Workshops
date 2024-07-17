@@ -4,9 +4,11 @@ from domain.repository import CommentRepository
 
 
 class DBCommentRepository(CommentRepository):
-    def get_comment(self, comment_id: int) -> Comment | None:
+    def get_comment(self, comment_id: int, title: str, username: str) -> Comment | None:
         try:
-            db_comment = DBComment.objects.get(id=comment_id)
+            db_comment = DBComment.objects.filter(
+                id=comment_id, post__title=title, author__username=username
+            )
         except DBComment.DoesNotExist:
             return None
         return self.to_comment(db_comment)
@@ -24,6 +26,8 @@ class DBCommentRepository(CommentRepository):
         db_comment = DBComment(
             post=comment.post, author=comment.author, text=comment.text
         )
+        db_comment.save()
+
         return self.to_comment(db_comment)
 
     def update_comment(self, comment: Comment) -> Comment:
@@ -37,13 +41,15 @@ class DBCommentRepository(CommentRepository):
 
         return self.to_comment(db_comment)
 
-    def delete_comment(self, comment_id: int) -> bool:
-        db_comment = DBComment.objects.get(id=comment_id)
-
-        if db_comment:
+    def delete_comment(self, comment_id: int, title: str, username: str) -> bool:
+        try:
+            db_comment = DBComment.objects.filter(
+                id=comment_id, post__title=title, author__username=username
+            )
             db_comment.delete()
             return True
-        return False
+        except DBComment.DoesNotExist:
+            return False
 
     @classmethod
     def to_comment(cls, db_comment: DBComment) -> Comment:
