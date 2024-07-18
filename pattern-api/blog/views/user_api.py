@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from di import UseCase
+from di import UserUseCase
 from ..models import User
 from ..serializers import UserSerializer
 
@@ -10,7 +10,7 @@ from ..serializers import UserSerializer
 class UserAPI(APIView):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self._use_cases = UseCase()
+        self._use_cases = UserUseCase()
 
     def get(self, request) -> Response:
         username = request.data.get("username")
@@ -43,8 +43,7 @@ class UserAPI(APIView):
             is_active = serializer.data.get("is_active")
             is_staff = serializer.data.get("is_staff")
             is_admin = serializer.data.get("is_admin")
-            created_at = serializer.data.get("created_at")
-            updated_at = serializer.data.get("updated_at")
+
             user = self._use_cases.add_user.invoke(
                 user=User(
                     email=email,
@@ -52,8 +51,6 @@ class UserAPI(APIView):
                     is_active=is_active,
                     is_staff=is_staff,
                     is_admin=is_admin,
-                    created_at=created_at,
-                    updated_at=updated_at,
                 )
             )
             return Response(
@@ -77,8 +74,7 @@ class UserAPI(APIView):
             is_active = serializer.data.get("is_active")
             is_staff = serializer.data.get("is_staff")
             is_admin = serializer.data.get("is_admin")
-            created_at = serializer.data.get("created_at")
-            updated_at = serializer.data.get("updated_at")
+
             user = self._use_cases.update_user.invoke(
                 user=User(
                     email=email,
@@ -86,8 +82,6 @@ class UserAPI(APIView):
                     is_active=is_active,
                     is_staff=is_staff,
                     is_admin=is_admin,
-                    created_at=created_at,
-                    updated_at=updated_at,
                 )
             )
             return Response(
