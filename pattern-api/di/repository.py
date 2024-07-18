@@ -1,7 +1,7 @@
 from typing import Self
 
 from data.repository import DBUserRepository, DBBlogPostRepository
-from domain.repository import UserRepository, BlogPostRepository
+from domain.repository import UserRepository, BlogPostRepository, CommentRepository
 
 
 class Repository:
@@ -24,3 +24,7 @@ class Repository:
     @property
     def blog_post_repository(self) -> BlogPostRepository:
         return DBBlogPostRepository()
+
+    @property
+    def comment_repository(self) -> CommentRepository:
+        return CommentRepository()
