@@ -3,7 +3,7 @@ import json
 from django.http import JsonResponse
 from django.views import View
 
-from di.use_case import UseCase
+from di.post_use_case import PostUseCase
 from domain.model import BlogPost, User
 from ..forms import BlogPostForm
 
@@ -13,7 +13,7 @@ class BlogPostAPI(View):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self._use_cases = UseCase()
+        self._use_cases = PostUseCase()
 
     def get(self, request) -> JsonResponse:
         blog_posts = self._use_cases.get_blog_post.all()

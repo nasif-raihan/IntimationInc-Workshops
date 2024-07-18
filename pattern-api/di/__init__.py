@@ -1,2 +1,2 @@
 from .repository import Repository
-from .use_case import UseCase
+from .post_use_case import PostUseCase
