@@ -80,3 +80,18 @@ class UserScore(models.Model):
 
     def __str__(self) -> str:
         return f"{self.user}-{self.reputation}"
+
+
+class Review(models.Model):
+    title = models.CharField(max_length=255)
+    rating = models.DecimalField(max_digits=3, decimal_places=2)
+    content = models.TextField(blank=True)
+    pros = models.TextField(blank=True)
+    cons = models.TextField(blank=True)
+    idea = models.TextField(blank=True)
+    recommendation = models.TextField(blank=True)
+    author_feedback = models.TextField(blank=True)
+    post = models.ForeignKey(to=BlogPost, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.rating}"
