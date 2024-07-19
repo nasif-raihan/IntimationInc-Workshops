@@ -67,7 +67,7 @@ class Comment(models.Model):
 
 
 class PostScore(models.Model):
-    reputation = models.IntegerField()
+    reputation = models.IntegerField(default=0)
     post = models.OneToOneField(to=BlogPost, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
@@ -75,7 +75,7 @@ class PostScore(models.Model):
 
 
 class UserScore(models.Model):
-    reputation = models.IntegerField()
+    reputation = models.IntegerField(default=0)
     user = models.OneToOneField(to=User, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
