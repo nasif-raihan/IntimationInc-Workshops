@@ -1,1 +1,2 @@
 from .add_reputation_use_case import AddReputationUseCase
+from .get_post_score_use_case import GetPostScoreUseCase
