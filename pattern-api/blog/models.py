@@ -64,3 +64,11 @@ class Comment(models.Model):
 
     def __str__(self) -> str:
         return f"{self.author}@{self.post}"
+
+
+class PostScore(models.Model):
+    reputation = models.IntegerField()
+    post = models.OneToOneField(to=BlogPost, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.post}-{self.reputation}"
