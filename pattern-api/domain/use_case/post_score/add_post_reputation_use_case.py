@@ -5,8 +5,8 @@ from domain.repository import PostScoreRepository
 
 
 @dataclass
-class IncreaseReputationUseCase:
+class AddPostReputationUseCase:
     repository: PostScoreRepository
 
-    def invoke(self, title: str) -> PostScore:
-        return self.repository.increase_reputation(title)
+    def invoke(self, post_score: PostScore) -> PostScore:
+        return self.repository.add_reputation(post_score)
