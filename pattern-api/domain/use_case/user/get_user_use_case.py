@@ -8,7 +8,7 @@ from domain.repository import UserRepository
 class GetUserUseCase:
     user_repository: UserRepository
 
-    def invoke(self, username: str) -> User:
+    def invoke(self, username: str) -> User | None:
         return self.user_repository.get_user_by_username(username)
 
     def all(self) -> list[User]:

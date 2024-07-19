@@ -8,5 +8,5 @@ from domain.repository import UserScoreRepository
 class GetUserScoreUseCase:
     repository: UserScoreRepository
 
-    def invoke(self, username: str) -> UserScore:
+    def invoke(self, username: str) -> UserScore | None:
         return self.repository.get_score(username)

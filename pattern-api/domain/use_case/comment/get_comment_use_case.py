@@ -8,7 +8,7 @@ from domain.repository import CommentRepository
 class GetCommentUseCase:
     repository: CommentRepository
 
-    def invoke(self, comment_id: int, title: str, username: str) -> Comment:
+    def invoke(self, comment_id: int, title: str, username: str) -> Comment | None:
         return self.repository.get_comment(comment_id, title, username)
 
     def all(self, title: str, username: str) -> list[Comment]:
