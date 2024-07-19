@@ -72,3 +72,11 @@ class PostScore(models.Model):
 
     def __str__(self) -> str:
         return f"{self.post}-{self.reputation}"
+
+
+class UserScore(models.Model):
+    reputation = models.IntegerField()
+    user = models.OneToOneField(to=User, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.user}-{self.reputation}"
