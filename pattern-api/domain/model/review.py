@@ -5,6 +5,7 @@ from .blog_post import BlogPost
 
 @dataclass
 class Review:
+    review_id: int
     title: str
     rating: float
     content: str

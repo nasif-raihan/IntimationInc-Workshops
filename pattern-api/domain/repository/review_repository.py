@@ -5,21 +5,21 @@ from ..model import Review
 
 class ReviewRepository(ABC):
     @abstractmethod
-    def add_review(self) -> Review:
+    def add_review(self, review: Review) -> Review:
         raise NotImplementedError("Implement add_review method")
 
     @abstractmethod
-    def get_all_reviews(self) -> list[Review]:
+    def get_all_reviews(self, post_title: str) -> list[Review]:
         raise NotImplementedError("Implement get_all_reviews method")
 
     @abstractmethod
-    def get_review(self) -> Review:
+    def get_review(self, post_title: str, review_id: int) -> Review | None:
         raise NotImplementedError("Implement get_review method")
 
     @abstractmethod
-    def update_review(self) -> Review:
+    def update_review(self, review: Review) -> Review:
         raise NotImplementedError("Implement update_review method")
 
     @abstractmethod
-    def delete_review(self) -> Review:
+    def delete_review(self, post_title: str, review_id: int) -> Review:
         raise NotImplementedError("Implement delete_review method")
