@@ -6,9 +6,7 @@ from domain.repository import PostScoreRepository
 class DBPostScoreRepository(PostScoreRepository):
     def add_reputation(self, post_score: PostScore) -> PostScore:
         try:
-            db_post_score = DBPostScore.objects.filter(
-                post__title=post_score.post.title
-            )
+            db_post_score = DBPostScore.objects.get(post__title=post_score.post.title)
             db_post_score.reputation = post_score.reputation
             db_post_score.save()
             return self.to_post_score(db_post_score)
@@ -21,14 +19,14 @@ class DBPostScoreRepository(PostScoreRepository):
 
     def get_score(self, title: str) -> PostScore | None:
         try:
-            db_post_score = DBPostScore.objects.filter(post__title=title)
+            db_post_score = DBPostScore.objects.get(post__title=title)
             return self.to_post_score(db_post_score)
         except DBPostScore.DoesNotExist:
             return None
 
     def increase_reputation(self, title: str) -> PostScore:
         try:
-            db_post_score = DBPostScore.objects.filter(post__title=title)
+            db_post_score = DBPostScore.objects.get(post__title=title)
             db_post_score.reputation += 1
             db_post_score.save()
             return self.to_post_score(db_post_score)
@@ -38,7 +36,7 @@ class DBPostScoreRepository(PostScoreRepository):
 
     def decrease_reputation(self, title: str) -> PostScore:
         try:
-            db_post_score = DBPostScore.objects.filter(post__title=title)
+            db_post_score = DBPostScore.objects.get(post__title=title)
             db_post_score.reputation -= 1
             db_post_score.save()
             return self.to_post_score(db_post_score)

@@ -1,3 +1,4 @@
 from .db_blog_repository import DBBlogPostRepository
 from .db_post_score_repository import DBPostScoreRepository
 from .db_user_repository import DBUserRepository
+from .db_user_score_repository import DBUserScoreRepository
