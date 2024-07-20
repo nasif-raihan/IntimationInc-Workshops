@@ -77,5 +77,3 @@ class Mapper:
             post=post,
             reviewer=user,
         )
-
-
