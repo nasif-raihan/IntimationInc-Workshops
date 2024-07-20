@@ -4,7 +4,7 @@ from domain.use_case.comment import (
     UpdateCommentUseCase,
     DeleteCommentUseCase,
 )
-from .repository import Repository
+from di.repository import Repository
 
 
 class CommentUseCase:

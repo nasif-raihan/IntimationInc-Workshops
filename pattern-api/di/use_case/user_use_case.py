@@ -4,7 +4,7 @@ from domain.use_case.user import (
     GetUserUseCase,
     UpdateUserUseCase,
 )
-from .repository import Repository
+from di.repository import Repository
 
 
 class UserUseCase:

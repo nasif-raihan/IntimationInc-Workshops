@@ -3,7 +3,7 @@ import json
 from django.http import JsonResponse
 from django.views import View
 
-from di.post_use_case import PostUseCase
+from di.use_case.post_use_case import PostUseCase
 from domain.model import BlogPost, User
 from ..forms import BlogPostForm
 

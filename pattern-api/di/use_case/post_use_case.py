@@ -4,7 +4,7 @@ from domain.use_case.blog_post import (
     GetBlogPostUseCase,
     UpdateBlogPostUseCase,
 )
-from .repository import Repository
+from di.repository import Repository
 
 
 class PostUseCase:
