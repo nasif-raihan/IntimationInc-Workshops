@@ -92,6 +92,7 @@ class Review(models.Model):
     recommendation = models.TextField(blank=True)
     author_feedback = models.TextField(blank=True)
     post = models.ForeignKey(to=BlogPost, on_delete=models.CASCADE)
+    reviewer = models.ForeignKey(to=User, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return f"{self.rating}"

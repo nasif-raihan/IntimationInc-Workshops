@@ -21,5 +21,5 @@ class ReviewRepository(ABC):
         raise NotImplementedError("Implement update_review method")
 
     @abstractmethod
-    def delete_review(self, post_title: str, review_id: int) -> Review:
+    def delete_review(self, post_title: str, review_id: int) -> bool:
         raise NotImplementedError("Implement delete_review method")
