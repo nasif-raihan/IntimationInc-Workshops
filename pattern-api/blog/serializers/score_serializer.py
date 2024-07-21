@@ -1,8 +1,8 @@
-from rest_framework import serializer
+from rest_framework import serializers
 
 
-class ScoreSerializer(serializer.Serializer):
-    blog_post_title = serializer.CharField(max_length=200)
-    author_username = serializer.CharField(max_length=255)
-    reviewer_username = serializer.CharField(max_length=255)
-    increase_reputation = serializer.BooleanField(default=True)
+class ScoreSerializer(serializers.Serializer):
+    blog_post_title = serializers.CharField(max_length=200)
+    author_username = serializers.CharField(max_length=255, required=True)
+    reviewer_username = serializers.CharField(max_length=255, required=True)
+    increase_reputation = serializers.BooleanField(default=True)
