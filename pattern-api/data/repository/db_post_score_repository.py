@@ -17,31 +17,31 @@ class DBPostScoreRepository(PostScoreRepository):
         except DBPost.DoesNotExist:
             raise RuntimeError("No such blog post is found!")
 
-    def get_score(self, title: str) -> PostScore | None:
+    def get_score(self, title: str, author_username: str) -> PostScore | None:
         try:
-            db_post_score = DBPostScore.objects.get(post__title=title)
+            db_post_score = DBPostScore.objects.get(post__title=title, post__author__username=author_username)
             return self.to_post_score(db_post_score)
         except DBPostScore.DoesNotExist:
             return None
 
-    def increase_reputation(self, title: str) -> PostScore:
+    def increase_reputation(self, title: str, author_username: str) -> PostScore:
         try:
-            db_post_score = DBPostScore.objects.get(post__title=title)
+            db_post_score = DBPostScore.objects.get(post__title=title, post__author__username=author_username)
             db_post_score.reputation += 1
             db_post_score.save()
             return self.to_post_score(db_post_score)
         except DBPostScore.DoesNotExist:
-            post_score = self.get_score(title)
+            post_score = self.get_score(title, author_username)
             return self.add_reputation(post_score)
 
-    def decrease_reputation(self, title: str) -> PostScore:
+    def decrease_reputation(self, title: str, author_username: str) -> PostScore:
         try:
-            db_post_score = DBPostScore.objects.get(post__title=title)
+            db_post_score = DBPostScore.objects.get(post__title=title, post__author__username=author_username)
             db_post_score.reputation -= 1
             db_post_score.save()
             return self.to_post_score(db_post_score)
         except DBPostScore.DoesNotExist:
-            db_post = DBPost.objects.get(title)
+            db_post = DBPost.objects.get(title, post__author__username=author_username)
             db_post_score = DBPostScore(reputation=-1, post=db_post)
             db_post_score.save()
             return self.to_post_score(db_post_score)

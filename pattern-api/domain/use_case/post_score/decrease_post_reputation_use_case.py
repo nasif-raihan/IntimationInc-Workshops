@@ -8,5 +8,5 @@ from domain.repository import PostScoreRepository
 class DecreasePostReputationUseCase:
     repository: PostScoreRepository
 
-    def invoke(self, title: str) -> PostScore:
-        return self.repository.decrease_reputation(title)
+    def invoke(self, title: str, author_username: str) -> PostScore:
+        return self.repository.decrease_reputation(title, author_username)

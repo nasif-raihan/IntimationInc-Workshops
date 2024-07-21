@@ -22,7 +22,7 @@ class ScoreUseCase:
         return AddPostReputationUseCase(self.__repository.post_score_repository)
 
     @property
-    def get_post_score(self) -> GetPostScoreUseCase:
+    def get_post_reputation(self) -> GetPostScoreUseCase:
         return GetPostScoreUseCase(self.__repository.post_score_repository)
 
     @property
@@ -46,5 +46,5 @@ class ScoreUseCase:
         return IncreaseUserReputationUseCase(self.__repository.user_score_repository)
 
     @property
-    def decrease_user_repository(self) -> DecreaseUserReputationUseCase:
+    def decrease_user_reputation(self) -> DecreaseUserReputationUseCase:
         return DecreaseUserReputationUseCase(self.__repository.user_score_repository)

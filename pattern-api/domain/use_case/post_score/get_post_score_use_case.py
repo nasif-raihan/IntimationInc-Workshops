@@ -8,5 +8,5 @@ from domain.repository import PostScoreRepository
 class GetPostScoreUseCase:
     repository: PostScoreRepository
 
-    def invoke(self, title: str) -> PostScore | None:
-        return self.repository.get_score(title)
+    def invoke(self, title: str, author_username: str) -> PostScore | None:
+        return self.repository.get_score(title, author_username)

@@ -1,4 +1,4 @@
 from .blog_post_serializer import BlogPostSerializer
 from .comment_serializer import CommentSerializer
 from .user_serializer import UserSerializer
-from .reviewer_serializer import ReviewerSerializer
+from .score_serializer import ScoreSerializer

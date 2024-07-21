@@ -9,13 +9,13 @@ class PostScoreRepository(ABC):
         raise NotImplementedError("Implement add_score method")
 
     @abstractmethod
-    def get_score(self, title: str) -> PostScore | None:
+    def get_score(self, title: str, author_username: str) -> PostScore | None:
         raise NotImplementedError("Implement get_score method")
 
     @abstractmethod
-    def increase_reputation(self, title: str) -> PostScore:
+    def increase_reputation(self, title: str, author_username: str) -> PostScore:
         raise NotImplementedError("Implement increase_reputation method")
 
     @abstractmethod
-    def decrease_reputation(self, title: str) -> PostScore:
+    def decrease_reputation(self, title: str, author_username: str) -> PostScore:
         raise NotImplementedError("Implement decrease_reputation method")
