@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from di import CommentUseCase, PostUseCase, UserUseCase
+from di.use_case import CommentUseCase, PostUseCase, UserUseCase
 from domain.model import Comment
 from ..serializers import CommentSerializer
 
