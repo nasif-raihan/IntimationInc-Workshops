@@ -6,8 +6,9 @@ from domain.repository import ReviewRepository
 class DBReviewRepository(ReviewRepository):
     def add_review(self, review: Review) -> Review:
         try:
-            DBReview.objects.get(
-                title=review.title, reviewer__username=review.reviewer.username, post__title=review.post.title
+            DBReview.objects.filter(
+                title=review.title, reviewer__username=review.reviewer.username, post__title=review.post.title,
+                post__author__username=review.post.author.username
             )
             return self.update_review(review)
         except DBReview.DoesNotExist:
@@ -36,23 +37,28 @@ class DBReviewRepository(ReviewRepository):
             db_review.save()
             return self.to_review(db_review)
 
-    def get_all_reviews(self, post_title: str) -> list[Review]:
+    def get_all_reviews(self, post_title: str, author_username: str) -> list[Review]:
         try:
-            db_reviews = DBReview.objects.filter(post__title=post_title)
+            db_reviews = DBReview.objects.filter(post__title=post_title, post__author__username=author_username)
             return [self.to_review(db_review) for db_review in db_reviews]
         except DBReview.DoesNotExist:
             return []
 
-    def get_review(self, post_title: str, review_id: int) -> Review | None:
+    def get_review(self, post_title: str, author_username: str, review_id: int) -> Review | None:
         try:
-            db_review = DBReview.objects.get(id=review_id, post__title=post_title)
+            db_review = DBReview.objects.get(
+                id=review_id, post__title=post_title, post__author__username=author_username
+            )
             return self.to_review(db_review)
         except DBReview.DoesNotExist:
             return None
 
     def update_review(self, review: Review) -> Review:
         try:
-            db_review = DBReview.objects.get(id=review.review_id, post__title=review.post.title)
+            db_review = DBReview.objects.filter(
+                title=review.title, reviewer__username=review.reviewer.username, post__title=review.post.title,
+                post__author__username=review.post.author.username
+            )[0]
             db_review.title = review.title
             db_review.rating = review.rating
             db_review.content = review.content
@@ -66,9 +72,11 @@ class DBReviewRepository(ReviewRepository):
         except DBReview.DoesNotExist:
             return self.add_review(review)
 
-    def delete_review(self, post_title: str, review_id: int) -> bool:
+    def delete_review(self, post_title: str, author_username: str, review_id: int) -> bool:
         try:
-            db_review = DBReview.objects.get(id=review_id, post__title=post_title)
+            db_review = DBReview.objects.get(
+                id=review_id, post__title=post_title, post__author__username=author_username
+            )
             db_review.delete()
             return True
         except DBReview.DoesNotExist:
@@ -112,4 +120,6 @@ class DBReviewRepository(ReviewRepository):
             author_feedback=db_review.author_feedback,
             post=post,
             reviewer=user,
+            created_at=db_review.created_at,
+            updated_at=db_review.updated_at
         )

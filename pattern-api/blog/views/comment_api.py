@@ -48,10 +48,12 @@ class CommentAPI(APIView):
 
         post = self.__post_use_cases.get_blog_post.invoke(title, username)
         user = self.__user_use_cases.get_user.invoke(username)
+        if not all((user, post)):
+            return Response(data={"message": "Invalid request payload"}, status=status.HTTP_400_BAD_REQUEST)
+
         comment = self.__comment_use_cases.add_comment.invoke(
             comment=Comment(post, user, text)
         )
-
         return Response(
             data={
                 "title": comment.post.title,
@@ -79,10 +81,12 @@ class CommentAPI(APIView):
 
         post = self.__post_use_cases.get_blog_post.invoke(title, username)
         user = self.__user_use_cases.get_user.invoke(username)
+        if not all((user, post)):
+            return Response(data={"message": "Invalid request payload"}, status=status.HTTP_400_BAD_REQUEST)
+
         comment = self.__comment_use_cases.update_comment.invoke(
             comment=Comment(post, user, text)
         )
-
         return Response(
             data={
                 "title": comment.post.title,
@@ -96,16 +100,20 @@ class CommentAPI(APIView):
         )
 
     def delete(self, request) -> Response:
-        data = json.load(request.data)
+        try:
+            data = json.loads(request.body)
+        except json.JSONDecodeError:
+            return Response(data={"message": "Invalid JSON payload"}, status=status.HTTP_400_BAD_REQUEST)
 
         title = data.get("title")
         username = data.get("username")
         comment_id = data.get("comment_id")
+        if not all((comment_id, title, username)):
+            return Response(data={"message": "Invalid request payload"}, status=status.HTTP_400_BAD_REQUEST)
 
         success = self.__comment_use_cases.delete_comment.invoke(
             comment_id, title, username
         )
-
         if success:
             message = "Successfully deleted the comment!"
         else:

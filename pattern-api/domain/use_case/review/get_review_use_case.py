@@ -8,8 +8,8 @@ from domain.repository import ReviewRepository
 class GetReviewUseCase:
     repository: ReviewRepository
 
-    def invoke(self, post_title: str, review_id: int) -> Review | None:
-        return self.repository.get_review(post_title, review_id)
+    def invoke(self, post_title: str, author_username: str, review_id: int) -> Review:
+        return self.repository.get_review(post_title, author_username, review_id)
 
     def all(self, post_title: str) -> list[Review]:
         return self.repository.get_all_reviews(post_title)

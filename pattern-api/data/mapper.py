@@ -76,4 +76,6 @@ class Mapper:
             author_feedback=db_review.author_feedback,
             post=post,
             reviewer=user,
+            created_at=db_review.created_at,
+            updated_at=db_review.updated_at
         )

@@ -11,4 +11,5 @@ class ReviewSerializer(serializers.Serializer):
     recommendation = serializers.Charfield(allow_blank=True)
     author_feedback = serializers.Charfield(allow_blank=True)
     post_title = serializers.Charfield(max_length=255, required=True)
+    author_username = serializers.Charfield(max_length=255, required=True)
     reviewer_username = serializers.Charfield(max_length=255, required=True)

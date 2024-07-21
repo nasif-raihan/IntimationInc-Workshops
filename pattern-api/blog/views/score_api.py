@@ -24,21 +24,24 @@ class ScoreAPI(APIView):
         if not all((title, username)):
             return Response(data={"message": "Invalid request payload"}, status=status.HTTP_400_BAD_REQUEST)
 
+        response = {}
         post_reputation = self.__score_use_case.get_post_reputation.invoke(title, username)
-        user_reputation = self.__score_use_case.get_user_reputation.invoke(username)
+        if post_reputation:
+            response["postReputation"] = {
+                "postTitle": post_reputation.post.title,
+                "reputation": post_reputation.reputation
+            }
 
-        return Response(
-            data={
-                "postReputation": {
-                    "postTitle": post_reputation.post.title,
-                    "reputation": post_reputation.reputation
-                },
-                "userReputation": {
-                    "username": user_reputation.user.username,
-                    "reputation": user_reputation.reputation
-                }
-            }, status=status.HTTP_200_OK
-        )
+        user_reputation = self.__score_use_case.get_user_reputation.invoke(username)
+        if user_reputation:
+            response["userReputation"] = {
+                "username": user_reputation.user.username,
+                "reputation": user_reputation.reputation
+            }
+
+        if post_reputation or user_reputation:
+            return Response(data=response, status=status.HTTP_200_OK)
+        return Response(data={"message": "Incorrect request payload"}, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request) -> Response:
         serializer = ScoreSerializer(request.data)

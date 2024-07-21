@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 
 from .blog_post import BlogPost
 from .user import User
@@ -17,3 +18,5 @@ class Review:
     post: BlogPost
     reviewer: User
     review_id: int = None
+    created_at: datetime = None
+    updated_at: datetime = datetime.now()
