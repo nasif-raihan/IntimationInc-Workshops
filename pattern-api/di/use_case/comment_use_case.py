@@ -9,7 +9,7 @@ from di.repository import Repository
 
 class CommentUseCase:
     def __init__(self):
-        self.__repository = Repository()
+        self.__repository = Repository.get_instance()
 
     @property
     def add_comment(self) -> AddCommentUseCase:

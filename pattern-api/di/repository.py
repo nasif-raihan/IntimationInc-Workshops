@@ -5,7 +5,8 @@ from data.repository import (
     DBBlogPostRepository,
     DBUserScoreRepository,
     DBPostScoreRepository,
-    DBReviewRepository
+    DBReviewRepository,
+    DBVideoRepository,
 )
 from domain.repository import (
     UserRepository,
@@ -13,7 +14,8 @@ from domain.repository import (
     CommentRepository,
     PostScoreRepository,
     UserScoreRepository,
-    ReviewRepository
+    ReviewRepository,
+    VideoRepository,
 )
 
 
@@ -53,3 +55,7 @@ class Repository:
     @property
     def review_repository(self) -> ReviewRepository:
         return DBReviewRepository()
+
+    @property
+    def video_repository(self) -> VideoRepository:
+        return DBVideoRepository()

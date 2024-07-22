@@ -15,7 +15,7 @@ from domain.use_case.user_score import (
 
 class ScoreUseCase:
     def __init__(self):
-        self.__repository = Repository()
+        self.__repository = Repository.get_instance()
 
     @property
     def add_post_reputation(self) -> AddPostReputationUseCase:

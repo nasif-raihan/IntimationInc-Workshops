@@ -1,10 +1,15 @@
-from domain.use_case.review import AddReviewUseCase, DeleteReviewUseCase, GetReviewUseCase, UpdateReviewUseCase
+from domain.use_case.review import (
+    AddReviewUseCase,
+    DeleteReviewUseCase,
+    GetReviewUseCase,
+    UpdateReviewUseCase,
+)
 from di.repository import Repository
 
 
 class ReviewUseCase:
     def __init__(self):
-        self.__repository = Repository()
+        self.__repository = Repository.get_instance()
 
     @property
     def add_review(self) -> AddReviewUseCase:
