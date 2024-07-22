@@ -102,7 +102,7 @@ class Review(models.Model):
 
 class Video(models.Model):
     video_id = models.CharField(max_length=255)
-    video_url = models.URLField(verbose_name="YouTube Video URL")
+    url = models.URLField(verbose_name="YouTube Video URL")
 
     def __str__(self) -> str:
         return f"{self.video_id}"
