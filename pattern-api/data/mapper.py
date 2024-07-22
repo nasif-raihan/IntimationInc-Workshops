@@ -1,8 +1,15 @@
 from typing import Self
 
-from blog.models import BlogPost as DBBlogPost, Comment as DBComment, PostScore as DBPostScore, Review as DBReview, \
-    User as DBUser, UserScore as DBUserScore
-from domain.model import BlogPost, Comment, PostScore, Review, User, UserScore
+from blog.models import (
+    BlogPost as DBBlogPost,
+    Comment as DBComment,
+    PostScore as DBPostScore,
+    Review as DBReview,
+    User as DBUser,
+    UserScore as DBUserScore,
+    Video as DBVideo,
+)
+from domain.model import BlogPost, Comment, PostScore, Review, User, UserScore, Video
 
 
 class Mapper:
@@ -77,5 +84,9 @@ class Mapper:
             post=post,
             reviewer=user,
             created_at=db_review.created_at,
-            updated_at=db_review.updated_at
+            updated_at=db_review.updated_at,
         )
+
+    @classmethod
+    def to_video(cls, db_video: DBVideo) -> Video:
+        return Video(video_id=db_video.video_id, url=db_video.url)

@@ -3,3 +3,4 @@ from .db_post_score_repository import DBPostScoreRepository
 from .db_user_repository import DBUserRepository
 from .db_user_score_repository import DBUserScoreRepository
 from .db_review_repository import DBReviewRepository
+from .db_video_repository import DBVideoRepository
