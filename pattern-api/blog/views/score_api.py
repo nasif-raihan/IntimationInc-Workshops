@@ -59,32 +59,34 @@ class ScoreAPI(APIView):
 
         reviewer = self.__user_use_case.get_user.invoke(reviewer_username)
         if reviewer.is_admin:
-            if increase_reputation:
-                user_reputation = self.__score_use_case.increase_user_reputation.invoke(author_username)
-            else:
-                user_reputation = self.__score_use_case.decrease_user_reputation.invoke(author_username)
+            reputation = self.__update_user_reputation(increase_reputation, author_username)
+        else:
+            reputation = self.__update_post_reputation(increase_reputation, title, author_username)
 
-            return Response(
-                data={
+        return Response(data=reputation, status=status.HTTP_201_CREATED)
+
+    def __update_user_reputation(self, increase_reputation: bool, author_username: str) -> dict:
+        if increase_reputation:
+            user_reputation = self.__score_use_case.increase_user_reputation.invoke(author_username)
+        else:
+            user_reputation = self.__score_use_case.decrease_user_reputation.invoke(author_username)
+
+        return {
                     "userReputation": {
                         "username": user_reputation.user.username,
                         "reputation": user_reputation.reputation
                     }
-                },
-                status=status.HTTP_201_CREATED
-            )
-        else:
-            if increase_reputation:
-                post_reputation = self.__score_use_case.increase_post_reputation.invoke(title, author_username)
-            else:
-                post_reputation = self.__score_use_case.decrease_post_reputation.invoke(title, author_username)
+        }
 
-        return Response(
-            data={
+    def __update_post_reputation(self, increase_reputation: bool, title, author_username: str) -> dict:
+        if increase_reputation:
+            post_reputation = self.__score_use_case.increase_post_reputation.invoke(title, author_username)
+        else:
+            post_reputation = self.__score_use_case.decrease_post_reputation.invoke(title, author_username)
+
+        return {
                 "postReputation": {
                     "postTitle": post_reputation.post.title,
                     "reputation": post_reputation.reputation
                 },
-            },
-            status=status.HTTP_201_CREATED
-        )
+        }
