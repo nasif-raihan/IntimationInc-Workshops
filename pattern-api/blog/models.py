@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
@@ -50,6 +51,19 @@ class BlogPost(models.Model):
     author = models.ForeignKey(to=User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ["title", "author"]
+
+    def clean(self):
+        super().clean()
+        queryset = BlogPost.objects.filter(
+            title=self.title, author__username=self.author.username
+        )
+        if queryset.exists() and queryset.first() != self:
+            raise ValidationError(
+                "A blog post with this title already exists for this author."
+            )
 
     def __str__(self) -> str:
         return f"{self.title}"
