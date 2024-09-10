@@ -3,3 +3,5 @@ poetry.lock
 pyproject.toml
 !server_one/pyproject.toml
 !server_two/pyproject.toml
+.vscode
+node_modules

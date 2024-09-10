@@ -6,7 +6,7 @@ from fastapi import FastAPI
 app = FastAPI()
 
 
-@app.get("/")
+@app.get("/message")
 async def server_one():
     uid = uuid4()
     return {"message": "server one", "random_id": uid}
