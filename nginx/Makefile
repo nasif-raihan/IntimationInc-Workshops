@@ -15,3 +15,7 @@ docker-two:
 docker-nginx:
 	docker build -t nginx ./nginx
 	docker run --name nginx -p 80:80 nginx
+
+docker-front-end:
+	docker build -t frontend ./front-end
+	docker run --name frontend -p 3000:3000 frontend
