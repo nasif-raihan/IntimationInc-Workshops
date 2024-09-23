@@ -1,0 +1,51 @@
+services:
+  front:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    container_name: frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    networks:
+      - lets-nginx-network
+
+  server_one:
+    build:
+      context: ./server_one
+      dockerfile: Dockerfile
+    container_name: server_one
+    restart: always
+    ports:
+      - "8001:8001"
+    networks:
+      - lets-nginx-network
+
+  server_two:
+    build:
+      context: ./server_two
+      dockerfile: Dockerfile
+    container_name: server_two
+    restart: always
+    ports:
+      - "8002:8002"
+    networks:
+      - lets-nginx-network
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - server_one
+      - server_two
+      - front
+    networks:
+      - lets-nginx-network
+
+networks:
+  lets-nginx-network:
+    external: true
